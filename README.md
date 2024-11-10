@@ -1,4 +1,4 @@
-# GPT-typo-squatting
+# LLM-app-squatting-and-cloning
 
 ## Project Overview
 
