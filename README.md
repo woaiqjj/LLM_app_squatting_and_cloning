@@ -1,4 +1,4 @@
-# LLM-app-squatting-and-cloning
+# GPT-typo-squatting
 
 ## Project Overview
 
@@ -27,7 +27,7 @@ This project addresses the following research questions:
 - `squatting/`: Stores data on detected squatting apps, including generated name variants and their matches.
 - `cloning/`: Contains data on detected cloning apps, focusing on apps with high functional and semantic similarity.
 - `LLMappCrazy/`: The core tool developed for detecting squatting and cloning, featuring modules for name generation, similarity matching, and cross-platform comparison.
-- `top_1000.csv`: Lists the top 1000 apps identified with duplicated or squatting names, showing the extent of name conflicts and impersonation in the dataset.
+- `top_1000_gpts.csv`: Lists the top 1000 apps identified with duplicated or squatting names, showing the extent of name conflicts and impersonation in the dataset.
 - `README.md`: Project overview, research context, and usage instructions.
 
 ## Data Collection
