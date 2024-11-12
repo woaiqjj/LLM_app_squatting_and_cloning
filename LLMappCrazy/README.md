@@ -1,44 +1,67 @@
-# LLMappCrazy
+# appsquatting
 
-## Overview
+Domain squatting, a well-known adversarial tactic that attackersregister domain names that are purposefully similar to popular do-mains, had been observed and studied for decades. Recent studiessuggested that squatting-like attacks have been penetrated to various problem spaces. We demonstrates that squattingbehaviors are also prevalent in the mobile app ecosystem with adifferent manner, which we called “App Squatting”. Specifically,attackers may release app with identifiers (e.g., app name, pack-age name or developer name) that are confusingly similar to thosebelonging to popular apps or large Internet brands. 
 
-**LLMappCrazy** is a tool designed to detect impersonation attacks in Large Language Model (LLM) app stores by identifying **app squatting** and **app cloning**. By leveraging 14 squatting generation techniques along with Levenshtein distance and BERT-based semantic analysis, LLMappCrazy provides a comprehensive approach to detecting apps that mimic popular names or functionality.
+We summarize 11 deformation models for app squatting. In particular, we propose and implement a tool named “AppCrazy”, which is capable of automatically generating variations of app identifiers.
 
-### Key Features
+Squatting-generation Models:
 
-- **Name Variant Generation**: Generates squatting name variants using techniques such as symbol expansion, character substitution, and emoji addition.
-- **Similarity Analysis**: Uses Levenshtein distance and BERT-based semantic similarity to identify cloned apps.
-- **Cross-Platform Detection**: Analyzes app names across multiple platforms to detect potential cross-platform impersonation.
+1、Mutation-based Models. 
 
-## Usage
+    (1) Case Substitution: Replace an uppercase character with a lowercase one (or vice versa), e.g., “Facebook” into “facebook”.
 
-To run **LLMappCrazy** with a specific app name and output results to a CSV file, use the following command:
+    (2) Vowel Character Insertion: Insert another vowel character after a vowel character, e.g., “Facebook” into “Faceebook”.
 
-```bash
-python LLMappCrazy.py --appname "ExampleAppName" --file "output.csv"
-```
+    (3) Vowel Character Deletion: Delete one or more vowel characters, e.g., “Facebook” into “Facbook”.
 
-### Parameters
+    (4) Vowel Character Substitution: Replace a vowel characters with other four vowel characters, e.g., “Facebook” into “Fecebook”.
 
-- `--appname` (required): The name of the application you want to analyze for squatting or cloning variations.
-- `--file` (required): The output file path where the results will be saved in CSV format.
+    (5) Double Character Insertion: Insert a same character between two consecutive identical characters, e.g., “Facebook” into “Faceboook”.
 
-### Example
+    (6) Double Character Deletion: Delete one or two characters who are the consecutive identical characters, e.g., “Facebook” into “Facebok”, and “Facebook” into “Facebk”.
 
-```bash
-python LLMappCrazy.py --appname "GPTAssistant" --file "squatting_results.csv"
-```
+    (7) Punctuation Substitution: Replace punctuation with other ones ( including space, underscore and dot), e.g., “com.facebook.katana” into “com.facebook_katana”.
 
-This command will analyze potential squatting or cloning variations of "GPTAssistant" and output the results to `squatting_results.csv`.
+    (8) Punctuation Deletion: Delete a punctuation (including space, underscore and dot), e.g., “com.facebook.katana” into “com.facebookkatana”.
 
-## Output
+    (9) Common Misspelling Mistakes Substitution: Replace specific characters with common misspelling mistakes. e.g., “Facebook” into “Faceb00k”.
 
-The output CSV file will include details of detected squatting and cloning apps, such as generated name variants, similarity scores, and potential impersonation risks.
+2、Combosquatting Generation Models. 
 
-## Requirements
+    (1) String Expansion: Insert characters before or after the identifier name, e.g., “Facebook” into “Facebook1”.
+    
+    (2) String Rearrangement: Split the string into elements based on character dot, and rearrangement the elements, e.g., “com.facebook.katana” into “com.katana.facebook”. Specifically, rearranged strings that are composed of commonnames in Android will be discarded. e.g., “com.android”, “com.google”, “com.game”
+    
+3、AppCrazy Tools 
 
-Ensure Python is installed. The tool may use libraries such as `Levenshtein` and `transformers` for similarity analysis.
+    Generating potential squatting appname and packagename,Supports the following Squatting Generation Models:
+    
+    usage:
+	
+    AppCrazy Usage Example:
+    (1) AppCrazy.py -a example -p com.example
+    print result on the screen.
+	
+![image](https://github.com/squattingapp/AppCrazy/raw/master/Screenshot/screenshot1.jpg)
+		
+    (2) AppCrazy.py -a example -p com.example -f ./example.txt
+    write result into .txt file.
 
----
+![example](https://github.com/squattingapp/AppCrazy/raw/master/Screenshot/screenshot2.jpg)
 
-This `README.md` provides users with an overview of **LLMappCrazy** and clear instructions on how to use it with example commands. Let me know if you'd like any additional information included!
+Result File.
+
+    (1)fake_app.xlsx: Fake apps collected by leveraging AppCrazy to 500 popular apps in Google Play.
+    (2)squatting_app.xlsx: Squatting apps collected by leveraging AppCrazy to 500 popular apps in Google Play.
+    
+    column1: app name;
+    column2: original app name;
+    column3: package name;
+    column4: original package name;
+    column5: developer name;
+    column6: original developer name;
+    column7: apk_md5;
+    column8: apk_sha256;
+    column9: apk_version;
+    column10: apk_size(bytes);
+    
